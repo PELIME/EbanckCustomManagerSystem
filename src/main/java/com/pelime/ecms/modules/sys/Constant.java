@@ -1,4 +1,4 @@
-package com.pelime.ecms.sys;
+package com.pelime.ecms.modules.sys;
 
 /**
  * 系统静态参数

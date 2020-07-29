@@ -1,4 +1,4 @@
-package com.pelime.ecms.sys.shiro;
+package com.pelime.ecms.modules.sys.shiro;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
