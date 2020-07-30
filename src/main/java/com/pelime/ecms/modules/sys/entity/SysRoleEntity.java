@@ -9,7 +9,7 @@ public class SysRoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
 
-    @Column(nullable = false,columnDefinition = "varchar(40)")
+    @Column(nullable = false,columnDefinition = "varchar(40)",unique = true)
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")

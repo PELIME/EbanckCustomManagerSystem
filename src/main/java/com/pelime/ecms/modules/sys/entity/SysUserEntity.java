@@ -11,7 +11,7 @@ public class SysUserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String username;
 
     @Column(nullable = false,columnDefinition = "varchar(100)")
@@ -31,7 +31,7 @@ public class SysUserEntity {
      */
     private Integer status;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sys_user_role",joinColumns = {@JoinColumn(name = "user_id")},
         inverseJoinColumns = {@JoinColumn(name="role_id")},foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT),
         inverseForeignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
