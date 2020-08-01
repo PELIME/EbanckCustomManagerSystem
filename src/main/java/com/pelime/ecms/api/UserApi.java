@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,7 @@ public class UserApi {
      * @param roles 角色名，多个以逗号分隔
      * @return
      */
+    @RequestMapping("/add")
     public R createUser(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam("email") String email,
@@ -41,6 +43,7 @@ public class UserApi {
             userEntity.setPhone(phone);
             userEntity.setSalt("xcx"+username);
             userEntity.setStatus(0);
+            userEntity.setCreateTime(new Date());
             List<String> roleList=Arrays.asList(roles.split(","));
             List<SysRoleEntity> rolesEntity=sysUserService.findRoleByNames(roleList);
             if(rolesEntity.size()>0){
@@ -53,4 +56,39 @@ public class UserApi {
             return R.error(e.getMessage());
         }
     }
+
+    /**
+     * 删除用户
+     *  @param id 用户id
+     * @return
+     */
+    @RequestMapping("/delete")
+    public R deleteUser(@RequestParam("userId") Long id){
+        try {
+            sysUserService.deleteUserById(id);
+            return R.ok("删除成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error(e.getMessage());
+        }
+    }
+    @RequestMapping("/updateRoles")
+    public R updateUserRoles(@RequestParam("username") String username, @RequestParam("roles") String roles){
+        try {
+            SysUserEntity userEntity=sysUserService.findUserByName(username);
+            userEntity.getRoles().clear();
+            List<String> roleList=Arrays.asList(roles.split(","));
+            List<SysRoleEntity> rolesEntity=sysUserService.findRoleByNames(roleList);
+            if(rolesEntity.size()>0){
+                userEntity.setRoles(rolesEntity);
+            }
+            sysUserService.createOrUpdateUser(userEntity);
+            return R.ok("添加成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            return R.error(e.getMessage());
+        }
+    }
+
+
 }

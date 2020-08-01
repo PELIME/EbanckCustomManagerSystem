@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SysUserDao extends JpaRepository<SysUserEntity,Long> {
-
+    SysUserEntity findByUsername(String  username);
 }

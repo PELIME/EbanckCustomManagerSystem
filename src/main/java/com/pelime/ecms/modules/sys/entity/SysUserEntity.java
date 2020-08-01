@@ -2,6 +2,7 @@ package com.pelime.ecms.modules.sys.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "sys_user")
@@ -30,6 +31,11 @@ public class SysUserEntity {
      * 状态 0：禁用 1：正常
      */
     private Integer status;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sys_user_role",joinColumns = {@JoinColumn(name = "user_id")},
@@ -101,4 +107,13 @@ public class SysUserEntity {
     public void setRoles(List<SysRoleEntity> roles) {
         this.roles = roles;
     }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
 }
