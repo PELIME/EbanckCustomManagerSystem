@@ -31,33 +31,7 @@ public class SysUserService {
         sysUserDao.deleteById(id);
     }
 
-    public SysRoleEntity createOrUpdateRole(SysRoleEntity roleEntity){
-        return sysRoleDao.save(roleEntity);
-    }
 
-    public void deleteRole(SysRoleEntity roleEntity){
-        sysRoleDao.delete(roleEntity);
-    }
-
-    public void deleteRoleById(Long id){
-        sysRoleDao.deleteById(id);
-    }
-
-    @Transactional
-    public void deleteRoleByRoleName(String roleName){
-        //获取该用户
-        SysRoleEntity roleEntity=sysRoleDao.findByRoleName(roleName);
-        List<SysUserEntity> users=roleEntity.getUsers();
-        for(SysUserEntity userTmp : users){
-            userTmp.getRoles().removeIf((u) -> {
-                return u.getRoleName().equals(roleName);
-            });
-            sysUserDao.save(userTmp);
-        }
-        roleEntity.getUsers().clear();
-        sysRoleDao.saveAndFlush(roleEntity);
-        sysRoleDao.deleteByRoleName(roleName);
-    }
 
     public void register(SysUserEntity userEntity){
         try {
@@ -67,13 +41,7 @@ public class SysUserService {
         }
     }
 
-    public SysRoleEntity findUserByRoleName(String roleName){
-        return sysRoleDao.findByRoleName(roleName);
-    }
 
-    public List<SysRoleEntity> findRoleByNames(List<String> roleNames){
-        return sysRoleDao.findAllByRoleNameIn(roleNames);
-    }
 
     public SysUserEntity findUserByName(String username){
         return sysUserDao.findByUsername(username);

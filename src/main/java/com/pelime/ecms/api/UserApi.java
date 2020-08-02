@@ -3,6 +3,7 @@ package com.pelime.ecms.api;
 import com.pelime.ecms.common.R;
 import com.pelime.ecms.modules.sys.entity.SysRoleEntity;
 import com.pelime.ecms.modules.sys.entity.SysUserEntity;
+import com.pelime.ecms.modules.sys.service.SysRoleSevice;
 import com.pelime.ecms.modules.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ public class UserApi {
 
     @Autowired
     SysUserService sysUserService;
+
+    @Autowired
+    SysRoleSevice sysRoleSevice;
 
     /**
      *  创建用户
@@ -45,7 +49,7 @@ public class UserApi {
             userEntity.setStatus(0);
             userEntity.setCreateTime(new Date());
             List<String> roleList=Arrays.asList(roles.split(","));
-            List<SysRoleEntity> rolesEntity=sysUserService.findRoleByNames(roleList);
+            List<SysRoleEntity> rolesEntity=sysRoleSevice.findRoleByNames(roleList);
             if(rolesEntity.size()>0){
                 userEntity.setRoles(rolesEntity);
             }
@@ -78,7 +82,7 @@ public class UserApi {
             SysUserEntity userEntity=sysUserService.findUserByName(username);
             userEntity.getRoles().clear();
             List<String> roleList=Arrays.asList(roles.split(","));
-            List<SysRoleEntity> rolesEntity=sysUserService.findRoleByNames(roleList);
+            List<SysRoleEntity> rolesEntity=sysRoleSevice.findRoleByNames(roleList);
             if(rolesEntity.size()>0){
                 userEntity.setRoles(rolesEntity);
             }
