@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>文件上传</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="${request.contextPath}/static/ebank/layui/css/layui.css">
+</head>
+<body>
+<div class="layui-upload">
+    <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+    <button type="button" class="layui-btn" id="test9" onclick="upingts">开始上传</button>
+</div>
+<script src="${request.contextPath}/static/ebank/layui/layui.js"></script>
+<script>
+    var loading=null;
+    layui.use('upload',function () {
+        var upload=layui.upload;
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#test8'
+            ,url: '${request.contextPath}/ebank/upexcel' //改成您自己的上传接口
+            ,auto: false
+            ,accept:'file'
+            ,acceptMime:'application/vnd.ms-excel'
+            //,multiple: true
+            ,bindAction: '#test9'
+            ,before:()=> {
+                loading = layer.msg('正在上传,请不要切换菜单', {icon: 16, shade: 0.3, time:0});
+            }
+            ,done:(res)=>{
+                layer.msg(res.message);
+                console.log(res)
+                layer.close(loading);
+            }
+            ,error:()=>{
+                layer.msg('上传失败');
+                layer.close(loading);
+            }
+        });
+    });
+</script>
+</body>
+</html>

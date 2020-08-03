@@ -31,7 +31,7 @@
                     <div class="message info" ><p>错误信息: ${err}</p></div>
                 </#if>
 
-                <form action="/login" method="post">
+                <form action="${request.contextPath}/login" method="post">
                     <p>
                         <label>用户名:</label> <br />
                         <input type="text" class="text" name="username" />

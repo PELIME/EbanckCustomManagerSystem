@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>查询</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="${request.contextPath}/static/ebank/layui/css/layui.css">
+</head>
+<body>
+<form class="layui-form" action="${request.contextPath}/ebank/query" method="post">
+    <div class="layui-inline">
+        <label class="layui-form-label">查询条件</label>
+        <div class="layui-input-block">
+            <select name="key" >
+                <option value="0">用户名</option>
+                <option value="1">客户号</option>
+                <option value="2">身份证号码</option>
+                <option value="3">手机号</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">过滤内容</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>数据更新日期</th>
+        <th>用户名</th>
+        <th>客户号</th>
+        <th>身份证号码</th>
+        <th>手机号</th>
+        <th>认证等级</th>
+        <th>最后登录日期</th>
+        <th>最后动账日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    <#if users?? && (users?size > 0)>
+        <#list users as user>
+        <tr>
+            <td>${user.updateTime!''}</td>
+            <td>${user.name!''}</td>
+            <td>${user.userId!''}</td>
+            <td>${user.idCardNumber!''}</td>
+            <td>${user.phone!''}</td>
+            <td>${user.grade!''}</td>
+            <td>${user.lastLoginTime!''}</td>
+            <td>${user.lastEffectTime!''}</td>
+        </tr>
+        </#list>
+    </#if>
+    </tbody>
+</table>
+<script src="${request.contextPath}/static/ebank/layui/layui.js"></script>
+<script>
+    layui.use('form',function () {
+        var form = layui.form;
+    })
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.pelime.ecms.modules.sys.entity.SysMenuEntity;
 import com.pelime.ecms.modules.sys.entity.SysRoleEntity;
 import com.pelime.ecms.modules.sys.model.MenuModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,6 +19,9 @@ public class SysMenuService {
 
     @Autowired
     SysMenuDao sysMenuDao;
+
+    @Value("${server.servlet.context-path}")
+    String contextPath;
     /**
      * 用于缓存菜单信息，减少数据库访问
      * 注意：更新角色与菜单对后需要刷新该缓存
@@ -25,32 +29,55 @@ public class SysMenuService {
     private Map<String,List<MenuModel>
             > memoryMenuByRoleName=new HashMap<>();
 
-    public List<MenuModel> getMenu(String roleName){
+    private Map<String,String> menuHtmlCache=new HashMap<>();
+
+    public String getMenuHtml(String roleName,String activeName){
+        //先从缓存里区
+        if(menuHtmlCache.containsKey(roleName)){
+            return menuHtmlCache.get(roleName);
+        }
+        List<MenuModel> models=getMenu(roleName,activeName);
+        StringBuilder sb=new StringBuilder();
+        for(MenuModel mm : models){
+            sb.append(mm.toString());
+        }
+        String menuString=sb.toString();
+        menuHtmlCache.put(roleName,menuString);
+        return menuString;
+    }
+    public List<MenuModel> getMenu(String roleName,String activeName){
         if(memoryMenuByRoleName.containsKey(roleName)){
             return memoryMenuByRoleName.get(roleName);
         }
-        else {
-
-        }
         SysRoleEntity roleEntity= sysRoleDao.findByRoleName(roleName);
-        List<SysMenuEntity> menuEntities=roleEntity.getMenus();
+        //如果该角色名为“超级管理员” 将获取所有目录
+        List<SysMenuEntity> menuEntities=roleName.equals("超级管理员")?sysMenuDao.findAll():roleEntity.getMenus();
         List<MenuModel> menuModels=new LinkedList<>();
-        buildMenuMoles(menuModels,menuEntities,0l);
+        buildMenuMoles(menuModels,menuEntities,0l,activeName);
+        memoryMenuByRoleName.put(roleName,menuModels);
         return menuModels;
     }
 
-    private void buildMenuMoles(List<MenuModel> models,List<SysMenuEntity> menuEntities,Long nodeId){
+    private void buildMenuMoles(List<MenuModel> models,List<SysMenuEntity> menuEntities,Long nodeId,String activeName){
         //获取所有一级目录
         for(SysMenuEntity sme : menuEntities){
             if(sme.getMenuId()!=nodeId&&sme.getParentId()==nodeId){
                 MenuModel mm=new MenuModel();
                 mm.setName(sme.getName());
+                if(activeName.equals(sme.getName())){
+                    mm.setActive(true);
+                }
+                else {
+                    mm.setActive(false);
+                }
+                mm.setType(sme.getType());
+                mm.setContextPath(contextPath);
                 mm.setOpenType(sme.getOpenMode());
                 mm.setUrl(sme.getUrl());
                 mm.setSort(sme.getOrderNum());
                 mm.setChildrens(new LinkedList<MenuModel>());
                 models.add(mm);
-                buildMenuMoles(mm.getChildrens(),menuEntities,sme.getMenuId());
+                buildMenuMoles(mm.getChildrens(),menuEntities,sme.getMenuId(),activeName);
             }
         }
     }

@@ -26,6 +26,8 @@ public class SysUserEntity {
     @Pattern(regexp = "1[0-9]{10}",message = "手机号码格式错误")
     private String phone;
 
+    private String department;
+
     private String salt;
     /**
      * 状态 0：禁用 1：正常
@@ -37,12 +39,25 @@ public class SysUserEntity {
      */
     private Date createTime;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "sys_user_role",joinColumns = {@JoinColumn(name = "user_id")},
         inverseJoinColumns = {@JoinColumn(name="role_id")},foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT),
         inverseForeignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private List<SysRoleEntity> roles;
 
+    public SysRoleEntity getActiveRole() {
+        if(activeRole==null){
+            activeRole=this.getRoles().get(0);
+        }
+        return activeRole;
+    }
+
+    public void setActiveRole(SysRoleEntity activeRole) {
+        this.activeRole = activeRole;
+    }
+
+    @Transient
+    private SysRoleEntity activeRole;
 
     public Long getUserId() {
         return userId;
@@ -116,4 +131,11 @@ public class SysUserEntity {
         this.createTime = createTime;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 }

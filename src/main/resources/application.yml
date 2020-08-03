@@ -22,6 +22,8 @@ spring:
     tempalte-loader-path: classpath:/templates
   mvc:
     static-path-pattern: /static/**
+    async:
+      request-timeout: 180000
   resources:
     static-locations: classpath:/static/
   datasource:

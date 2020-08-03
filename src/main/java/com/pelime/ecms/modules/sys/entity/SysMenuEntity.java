@@ -2,6 +2,7 @@ package com.pelime.ecms.modules.sys.entity;
 
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Entity(name = "sys_menu")
@@ -51,8 +52,9 @@ public class SysMenuEntity {
 
     /**
      * 打开方式
+     * 类型 0：当前iframe 1:当前标签 2：新标签 3：新窗口
      */
-    private String openMode;
+    private Integer openMode;
 
     @Transient
     private Boolean open;
@@ -132,11 +134,11 @@ public class SysMenuEntity {
         this.orderNum = orderNum;
     }
 
-    public String getOpenMode() {
+    public Integer getOpenMode() {
         return openMode;
     }
 
-    public void setOpenMode(String openMode) {
+    public void setOpenMode(Integer openMode) {
         this.openMode = openMode;
     }
 
