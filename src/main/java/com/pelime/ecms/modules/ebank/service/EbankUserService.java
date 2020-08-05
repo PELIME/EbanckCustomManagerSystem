@@ -4,15 +4,17 @@ import com.pelime.ecms.modules.ebank.dao.EbankUserDao;
 import com.pelime.ecms.modules.ebank.entity.EbankUserEntity;
 import com.pelime.ecms.modules.ebank.util.ExcelUtils;
 import com.pelime.ecms.modules.ebank.util.ReflectionUtils;
+import com.pelime.ecms.modules.sys.entity.SysUserEntity;
+import com.pelime.ecms.modules.sys.shiro.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EbankUserService {
@@ -103,5 +105,38 @@ public class EbankUserService {
             return ebankUserDao.findByPhoneAndDeptNum(value,dept);
         } else
             return null;
+    }
+
+    public Page<EbankUserEntity> pagedByDept(Pageable pageable){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        String depts=user.getDepartment();
+        String[] deptsArr=depts.split(",");
+        if(deptsArr.length==1){
+           return ebankUserDao.findAllByDeptNum(Integer.parseInt(depts),pageable);
+        }
+        else {
+            List<Integer> deptsNum=new ArrayList<>(deptsArr.length);
+            for(String s : deptsArr){
+                deptsNum.add(Integer.parseInt(s));
+            }
+            return ebankUserDao.findAllByDeptNumIn(deptsNum,pageable);
+        }
+    }
+
+    public void doClaim(String userId){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        EbankUserEntity ebankUserEntity=ebankUserDao.findByUserId(userId).get(0);
+        ebankUserEntity.setCustomerManager(user.getUsername());
+        ebankUserDao.save(ebankUserEntity);
+    }
+
+    public Page<EbankUserEntity> pagedByCustomerManager(Pageable pageable){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        return ebankUserDao.findAllByCustomerManager(user.getUsername(),pageable);
+    }
+
+    public Page<EbankUserEntity> pagedByCustomerManagerBefore(Date start,Pageable pageable){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        return ebankUserDao.findAllByCustomerManagerAndLastEffectTimeIsNullOrLastEffectTimeBefore(user.getUsername(),start,pageable);
     }
 }

@@ -5,7 +5,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=7" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>首页</title>
+    <title>手机银行客户认领</title>
     <style type="text/css" media="all">
         @import url("${request.contextPath}/static/css/style.css");
         @import url("${request.contextPath}/static/css/jquery.wysiwyg.css");
@@ -28,18 +28,13 @@
         <h2>动账查询</h2>
     </div>
     <div class="block_content">
-        <form action="${request.contextPath}/ebank/squery" method="post">
+        <form action="${request.contextPath}/ebank/myCustomer" method="post">
             <p><label>查询条件:</label> <br />
                 <select class="styled" name="key">
-                    <option value="0">用户名</option>
-                    <option value="1">客户号</option>
-                    <option value="2">身份证号码</option>
-                    <option value="3">手机号</option>
+                    <option value="0">默认</option>
+                    <option value="1">未动账</option>
+                    <option value="2">已动账</option>
                 </select>
-            </p>
-            <p>
-                <label>过滤内容:</label><br />
-                <input type="text" name="value" class="text small" />
             </p>
             <p>
                 <input type="submit" class="submit small" value="提交" />
@@ -80,14 +75,24 @@
                 </tr>
                 </#list>
             </#if>
-                </tbody>
+            </tbody>
 
             </table>
-        </form>
+            <div class="pagination right">
+                <#if pageShow?? && (pageShow?size > 0)>
+                <span>共 ${totalPages} 页</span>
+                <a href="${request.contextPath}/ebank/myCustomer?pageNum=1">第一页</a>
+                <#list pageShow as ps>
+                <a href="${request.contextPath}/ebank/myCustomer?pageNum=${ps.num}" ${ps.attr}>${ps.show}</a>
+            </#list>
+            <a href="${request.contextPath}/ebank/myCustomer?pageNum=${totalPages}">最后一页</a>
+        </#if>
+    </div>
+    </form>
 
-    </div>		<!-- .block_content ends -->
-    <div class="bendl"></div>
-    <div class="bendr"></div>
+</div>		<!-- .block_content ends -->
+<div class="bendl"></div>
+<div class="bendr"></div>
 </div>
 <!--[if IE]><script type="text/javascript" src="${request.contextPath}/static/js/excanvas.js"></script><![endif]-->
 <script type="text/javascript" src="${request.contextPath}/static/js/jquery.js"></script>

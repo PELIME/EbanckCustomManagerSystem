@@ -52,6 +52,19 @@ public class EbankUserEntity {
      */
     private Date lastEffectTime;
 
+    public String getCustomerManager() {
+        return customerManager;
+    }
+
+    public void setCustomerManager(String customerManager) {
+        this.customerManager = customerManager;
+    }
+
+    /**
+     * 管户人员 姓名
+     */
+    private String customerManager;
+
     public EbankUserEntity(String userId, int deptNum, Date updateTime, String name, String idCardNumber, String phone, Date registerTime, String grade, Date lastLoginTime, Date lastEffectTime) {
         this.userId = userId;
         this.deptNum = deptNum;
