@@ -34,11 +34,7 @@ public class SysUserService {
 
 
     public void register(SysUserEntity userEntity){
-        try {
-            sysUserDao.save(userEntity);
-        }catch (Exception e){
-            throw e;
-        }
+        sysUserDao.save(userEntity);
     }
 
 

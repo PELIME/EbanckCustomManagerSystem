@@ -1,55 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <title>朴实的查询</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>首页</title>
+    <style type="text/css" media="all">
+        @import url("${request.contextPath}/static/css/style.css");
+        @import url("${request.contextPath}/static/css/jquery.wysiwyg.css");
+        @import url("${request.contextPath}/static/css/facebox.css");
+        @import url("${request.contextPath}/static/css/visualize.css");
+        @import url("${request.contextPath}/static/css/date_input.css");
+    </style>
+    <!--[if lt IE 8]><style type="text/css" media="all">@import url("${request.contextPath}/static/css/ie.css");</style><![endif]-->
 </head>
 <body>
-<form action="${request.contextPath}/ebank/squery" method="post">
-    查询条件:
-    <select name="key">
-        <option value="0">用户名</option>
-        <option value="1">客户号</option>
-        <option value="2">身份证号码</option>
-        <option value="3">手机号</option>
-    </select>
-    过滤内容:
-    <input type="text" name="value" autocomplete="off">
-    <button type="submit">查询</button>
-    <button type="reset">重置</button>
-</form>
-<div style="height: 20px;border-bottom: 1px solid grey"></div>
-<table>
-    <thead>
-    <tr>
-        <th>数据更新日期</th>
-        <th>用户名</th>
-        <th>客户号</th>
-        <th>身份证号码</th>
-        <th>手机号</th>
-        <th>认证等级</th>
-        <th>最后登录日期</th>
-        <th>最后动账日期</th>
-    </tr>
-    </thead>
-    <tbody>
-    <#if users?? && (users?size > 0)>
-    <#list users as user>
-    <tr>
-        <td>${user.updateTime!''}</td>
-        <td>${user.name!''}</td>
-        <td>${user.userId!''}</td>
-        <td>${user.idCardNumber!''}</td>
-        <td>${user.phone!''}</td>
-        <td>${user.grade!''}</td>
-        <td>${user.lastLoginTime!''}</td>
-        <td>${user.lastEffectTime!''}</td>
-    </tr>
-    </#list>
-</#if>
-</tbody>
-</table>
+<div class="block">
+    <div class="block_head">
+        <div class="bheadl"></div>
+        <div class="bheadr"></div>
+        <h2>动账查询</h2>
+    </div>
+    <div class="block_content">
+        <form action="${request.contextPath}/ebank/squery" method="post">
+            <p><label>查询条件:</label> <br />
+                <select class="styled" name="key">
+                    <option value="0">用户名</option>
+                    <option value="1">客户号</option>
+                    <option value="2">身份证号码</option>
+                    <option value="3">手机号</option>
+                </select>
+            </p>
+            <p>
+                <label>过滤内容:</label><br />
+                <input type="text" name="value" class="text small" />
+            </p>
+            <hr />
+            <p>
+                <input type="submit" class="submit small" value="提交" />
+            </p>
+        </form>
+    </div>
+    <div class="block_content">
+
+        <form action="" method="post">
+
+            <table cellpadding="0" cellspacing="0" width="100%" class="sortable">
+                <thead>
+                <tr>
+                    <th width="10"><input type="checkbox" class="check_all" /></th>
+                    <th>数据更新日期</th>
+                    <th>用户名</th>
+                    <th>客户号</th>
+                    <th>身份证号码</th>
+                    <th>手机号</th>
+                    <th>认证等级</th>
+                    <th>最后登录日期</th>
+                    <th>最后动账日期</th>
+                    <td>&nbsp;</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                <#if users?? && (users?size > 0)>
+                <#list users as user>
+                <tr>
+                    <td>${user.updateTime!''}</td>
+                    <td>${user.name!''}</td>
+                    <td>${user.userId!''}</td>
+                    <td>${user.idCardNumber!''}</td>
+                    <td>${user.phone!''}</td>
+                    <td>${user.grade!''}</td>
+                    <td>${user.lastLoginTime!''}</td>
+                    <td>${user.lastEffectTime!''}</td>
+                </tr>
+                </#list>
+            </#if>
+                </tbody>
+
+            </table>
+
+
+
+            <div class="tableactions">
+                <select>
+                    <option>Actions</option>
+                    <option>删除</option>
+                    <option>编辑</option>
+                </select>
+
+                <input type="submit" class="submit tiny" value="Apply to selected" />
+            </div>		<!-- .tableactions ends -->
+
+
+
+            <div class="pagination right">
+                <a href="#">&laquo;</a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>		<!-- .pagination ends -->
+
+        </form>
+
+    </div>		<!-- .block_content ends -->
+    <div class="bendl"></div>
+    <div class="bendr"></div>
+</div>
+<!--[if IE]><script type="text/javascript" src="${request.contextPath}/static/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.img.preload.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.filestyle.mini.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.date_input.pack.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/facebox.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.visualize.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.visualize.tooltip.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.select_skin.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/ajaxupload.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/jquery.pngfix.js"></script>
+<script type="text/javascript" src="${request.contextPath}/static/js/custom.js"></script>
 </body>
 </html>

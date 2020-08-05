@@ -5,6 +5,8 @@ import com.pelime.ecms.modules.sys.entity.SysRoleEntity;
 import com.pelime.ecms.modules.sys.entity.SysUserEntity;
 import com.pelime.ecms.modules.sys.service.SysRoleSevice;
 import com.pelime.ecms.modules.sys.service.SysUserService;
+import com.pelime.ecms.modules.sys.shiro.ShiroUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,11 +44,12 @@ public class UserApi {
         try {
             SysUserEntity userEntity=new SysUserEntity();
             userEntity.setUsername(username);
-            userEntity.setPassword(password);
+            String salt = RandomStringUtils.randomAlphanumeric(20);
+            userEntity.setSalt(salt);
+            userEntity.setPassword(ShiroUtils.sha256(password, userEntity.getSalt()));
             userEntity.setEmail(email);
             userEntity.setPhone(phone);
-            userEntity.setSalt("xcx"+username);
-            userEntity.setStatus(0);
+            userEntity.setStatus(1);
             userEntity.setCreateTime(new Date());
             List<String> roleList=Arrays.asList(roles.split(","));
             List<SysRoleEntity> rolesEntity=sysRoleSevice.findRoleByNames(roleList);

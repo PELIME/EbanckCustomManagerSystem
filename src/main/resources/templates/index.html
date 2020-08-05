@@ -71,7 +71,14 @@
                 return clientHeight;
             }
             function iFrameHeight() {
+                //判断路径
+
                 var ifm= document.getElementById("mainFrame");
+                //if(ifm.indexOf("/login"))
+                var srcString=ifm.contentWindow.location.href;
+                if(srcString.indexOf("/login")+6==srcString.length){
+                    window.location.href=srcString;
+                }
                 var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
                 if(ifm != null && subWeb != null) {
                     var h=getClientHeight();
