@@ -8,7 +8,7 @@ server:
   session:
     tracking-modes: cookie
   servlet:
-    context-path: /ecms
+    context-path: /cims
 
 spring:
   servlet:

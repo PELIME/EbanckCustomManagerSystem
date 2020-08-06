@@ -91,6 +91,8 @@ public class EbankPageController {
                                 @RequestParam(name = "key",defaultValue = "0") Integer key,
                                 @RequestParam(name = "value",defaultValue = "") String value,
                                 Model model) throws Exception {
+        model.addAttribute("key",key);
+        model.addAttribute("value",value);
         SysUserEntity user= ShiroUtils.getUserEntity();
         Sort sort = new Sort(Sort.Direction.DESC, "userId");
         Pageable pageable=PageRequest.of(pageNum-1,20,sort);

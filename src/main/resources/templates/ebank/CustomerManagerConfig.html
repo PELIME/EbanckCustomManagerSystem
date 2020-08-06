@@ -31,15 +31,15 @@
         <form action="${request.contextPath}/ebank/customerClaim" method="post">
             <p><label>查询条件:</label> <br />
                 <select class="styled" name="key">
-                    <option value="0">用户名</option>
-                    <option value="1">客户号</option>
-                    <option value="2">身份证号码</option>
-                    <option value="3">手机号</option>
+                    <option  ${(key==0) ? string('selected','')} value="0">用户名</option>
+                    <option  ${(key==1) ? string('selected','')} value="1">客户号</option>
+                    <option  ${(key==2) ? string('selected','')}value="2">身份证号码</option>
+                    <option  ${(key==3) ? string('selected','')} value="3">手机号</option>
                 </select>
             </p>
             <p>
                 <label>过滤内容:</label><br />
-                <input type="text" name="value" class="text small" />
+                <input type="text" name="value" class="text small" value="${value}" />
             </p>
             <p>
                 <input type="submit" class="submit small" value="提交" />
@@ -60,7 +60,7 @@
                     <th>手机号</th>
                     <th>认证等级</th>
                     <th>认领人员</th>
-                    <td>&nbsp;</td>
+                    <td>操作</td>
                 </tr>
                 </thead>
 
@@ -74,9 +74,11 @@
                     <td>${user.phone!''}</td>
                     <td>${user.grade!''}</td>
                     <td>${user.customerManager!''}</td>
+                    <td>
                     <#if !user.customerManager??>
-                    <td><a href="${request.contextPath}/ebank/customerClaim?pageNum=${currentPage}&userId=${user.userId!''}">认领</a></td>
+                    <a href="${request.contextPath}/ebank/customerClaim?pageNum=${currentPage}&userId=${user.userId!''}">认领</a>
                     </#if>
+                    </td>
                 </tr>
                 </#list>
             </#if>

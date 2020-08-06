@@ -31,6 +31,11 @@ public class SysMenuService {
 
     private Map<String,String> menuHtmlCache=new HashMap<>();
 
+    public void clearCache(){
+        memoryMenuByRoleName.clear();
+        menuHtmlCache.clear();
+    }
+
     public String getMenuHtml(String roleName,String activeName){
         //先从缓存里区
         if(menuHtmlCache.containsKey(roleName)){

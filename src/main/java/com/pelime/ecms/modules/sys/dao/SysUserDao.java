@@ -14,6 +14,6 @@ public interface SysUserDao extends JpaRepository<SysUserEntity,Long> {
     @Query(value = "SELECT m.perms FROM sys_user_role ur " +
             "LEFT JOIN sys_role_menu rm ON ur.role_id=rm.role_id " +
             "LEFT JOIN sys_menu m ON rm.menu_id=m.menu_id " +
-            "WHERE ur.user_id=?0",nativeQuery = true)
+            "WHERE ur.user_id=?1",nativeQuery = true)
     List<String> findAllPerms(Long userId);
 }

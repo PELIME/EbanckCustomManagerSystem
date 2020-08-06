@@ -32,7 +32,14 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     SysMenuDao sysMenuDao;
+    /**
+     * 缓存权限信息
+     */
+    Map<Long,SimpleAuthorizationInfo> cacheInfo=new HashMap<>();
 
+    public void clearCache(){
+        cacheInfo.clear();
+    }
     /**
      * 验证权限时调用
      * @param principalCollection
@@ -42,6 +49,9 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SysUserEntity user=(SysUserEntity)principalCollection.getPrimaryPrincipal();
         Long userId=user.getUserId();
+        if(cacheInfo.containsKey(userId)){
+            return cacheInfo.get(userId);
+        }
         List<SysRoleEntity> roles=user.getRoles();
         List<String> permsList;
         if(isSuper(roles)){
@@ -64,6 +74,7 @@ public class UserRealm extends AuthorizingRealm {
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
+        cacheInfo.put(userId,info);
         return info;
     }
 

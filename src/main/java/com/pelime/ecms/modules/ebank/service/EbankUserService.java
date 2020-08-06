@@ -110,6 +110,7 @@ public class EbankUserService {
     public Page<EbankUserEntity> pagedByDept(Pageable pageable){
         SysUserEntity user= ShiroUtils.getUserEntity();
         String depts=user.getDepartment();
+        //@TODO 空判断
         String[] deptsArr=depts.split(",");
         if(deptsArr.length==1){
            return ebankUserDao.findAllByDeptNum(Integer.parseInt(depts),pageable);
@@ -126,7 +127,7 @@ public class EbankUserService {
     public int doClaim(String userId){
         SysUserEntity user= ShiroUtils.getUserEntity();
         EbankUserEntity ebankUserEntity=ebankUserDao.findByUserId(userId).get(0);
-        if(ebankUserEntity.getCustomerManager()!=null||!ebankUserEntity.getCustomerManager().equals("")){
+        if(ebankUserEntity.getCustomerManager()!=null){
             return 1;
         }
         ebankUserEntity.setCustomerManager(user.getUsername());

@@ -26,6 +26,7 @@ public class AuthController {
             Subject subject = ShiroUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
+            subject.getSession().setTimeout(30*60*1000);
         }catch (UnknownAccountException e) {
             errMsg=e.getMessage();
         }catch (IncorrectCredentialsException e) {
