@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -48,6 +49,10 @@ public interface EbankUserDao extends JpaRepository<EbankUserEntity,String> {
 
     Page<EbankUserEntity> findAllByDeptNumInAndCustomerManager(Collection<Integer> depts,String customerManager,Pageable pageable);
 
-    @Query("SELECT  e FROM ebank_user e WHERE e.customerManager = ?1 AND (e.lastEffectTime is null OR e.lastEffectTime < ?2)")
-    Page<EbankUserEntity> findAllByCustomerManagerAndLastEffectTimeIsNullOrLastEffectTimeBefore(String customerManager,Date start,Pageable pageable);
+
+    @Query("SELECT  e FROM ebank_user e WHERE e.customerManager = :customerManager AND (e.lastEffectTime is null OR e.lastEffectTime < :start)")
+    Page<EbankUserEntity> findAllByCustomerManagerAndLastEffectTimeIsNullOrLastEffectTimeBefore(@Param("customerManager") String customerManager,@Param("start") Date start,Pageable pageable);
+
+    @Query("SELECT  e FROM ebank_user e WHERE e.customerManager = :customerManager AND e.lastEffectTime is not null AND e.lastEffectTime >= :start")
+    Page<EbankUserEntity> findAllByCustomerManagerAndLastEffectTimeIsNotNullOrLastEffectTimeAfter(@Param("customerManager") String customerManager,@Param("start") Date start, Pageable pageable);
 }

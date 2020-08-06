@@ -25,7 +25,7 @@
     <div class="block_head">
         <div class="bheadl"></div>
         <div class="bheadr"></div>
-        <h2>动账查询</h2>
+        <h2>客户认领</h2>
     </div>
     <div class="block_content">
         <form action="${request.contextPath}/ebank/customerClaim" method="post">
@@ -74,7 +74,9 @@
                     <td>${user.phone!''}</td>
                     <td>${user.grade!''}</td>
                     <td>${user.customerManager!''}</td>
-                    <td class="delete"><a href="${request.contextPath}/ebank/customerClaim?pageNum=${currentPage}&userId=${user.userId!''}">认领</a></td>
+                    <#if !user.customerManager??>
+                    <td><a href="${request.contextPath}/ebank/customerClaim?pageNum=${currentPage}&userId=${user.userId!''}">认领</a></td>
+                    </#if>
                 </tr>
                 </#list>
             </#if>

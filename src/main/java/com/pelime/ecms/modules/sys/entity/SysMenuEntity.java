@@ -19,8 +19,15 @@ public class SysMenuEntity {
     /**
      * 菜单名称
      */
-    @Column(nullable = false)
+    @Column(nullable = false,length = 30)
     private String name;
+
+
+    /**
+     * 展示名称
+     */
+    @Column(length = 30)
+    private String showName;
 
     /**
      * 菜单URL
@@ -42,6 +49,7 @@ public class SysMenuEntity {
     /**
      * 菜单图标
      */
+    @Column(length = 50)
     private String icon;
 
     /**
@@ -156,5 +164,13 @@ public class SysMenuEntity {
 
     public void setRoles(List<SysRoleEntity> roles) {
         this.roles = roles;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 }

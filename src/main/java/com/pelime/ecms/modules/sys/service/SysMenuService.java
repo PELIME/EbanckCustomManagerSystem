@@ -63,7 +63,16 @@ public class SysMenuService {
         for(SysMenuEntity sme : menuEntities){
             if(sme.getMenuId()!=nodeId&&sme.getParentId()==nodeId){
                 MenuModel mm=new MenuModel();
-                mm.setName(sme.getName());
+                String showName=sme.getShowName();
+                /**
+                 * 如果查单展示名称不为空时，显示展示名称
+                 */
+                if(showName==null||showName.equals("")){
+                    mm.setName(sme.getName());
+                }
+                else {
+                    mm.setName(showName);
+                }
                 if(activeName.equals(sme.getName())){
                     mm.setActive(true);
                 }

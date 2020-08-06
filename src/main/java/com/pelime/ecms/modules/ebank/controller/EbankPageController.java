@@ -97,8 +97,8 @@ public class EbankPageController {
         if(userId!=null&&!userId.equals("")){
             ebankUserService.doClaim(userId);
         }
-        if(key!=null&&!key.equals("")){
-            List<EbankUserEntity> users=user.getUserId()==1?ebankUserService.findByKeyValue(key,value):ebankUserService.findByKeyValue(key,value,user.getDepartment());
+        if(key!=null&& key!=0){
+            List<EbankUserEntity> users=user.getUsername().equals("admin")?ebankUserService.findByKeyValue(key,value):ebankUserService.findByKeyValue(key,value,user.getDepartment());
             model.addAttribute("users",users);
             int totalPages=1;
             model.addAttribute("totalPages",totalPages);
@@ -116,31 +116,39 @@ public class EbankPageController {
     }
     @RequestMapping("/myCustomer")
     public String myCustomer(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
+                             @RequestParam(name = "userId",defaultValue = "") String userId,
                              @RequestParam(name = "key",defaultValue = "0") Integer key,
                              Model model) throws Exception {
-        SysUserEntity user= ShiroUtils.getUserEntity();
+        model.addAttribute("key",key);
+        if(userId!=null&&!userId.equals("")){
+            ebankUserService.doNotClaim(userId);
+        }
         Sort sort = new Sort(Sort.Direction.DESC, "userId");
         Pageable pageable=PageRequest.of(pageNum-1,20,sort);
+        Page<EbankUserEntity> entitiesPage=null;
         if(key==0){
-            Page<EbankUserEntity> entitiesPage=ebankUserService.pagedByCustomerManager(pageable);
-            model.addAttribute("users",entitiesPage.getContent());
-            int totalPages=entitiesPage.getTotalPages();
-            model.addAttribute("totalPages",totalPages);
-            model.addAttribute("currentPage",pageNum);
-            model.addAttribute("pageShow",PageNumModel.bulid(pageNum,totalPages));
+            entitiesPage=ebankUserService.pagedByCustomerManager(pageable);
         }
-        else if(key==1){
+        else {
             Calendar c = Calendar.getInstance();
             Date now=new Date();
             c.setTime(now);
             c.set(Calendar.DAY_OF_MONTH,1);
+            c.set(Calendar.HOUR_OF_DAY,0);
             Date start=c.getTime();
-            Page<EbankUserEntity> entitiesPage=ebankUserService.pagedByCustomerManagerBefore(start,pageable);
-            int totalPages=entitiesPage.getTotalPages();
-            model.addAttribute("totalPages",totalPages);
-            model.addAttribute("currentPage",pageNum);
-            model.addAttribute("pageShow",PageNumModel.bulid(pageNum,totalPages));
+            if(key==1){
+                entitiesPage=ebankUserService.pagedByCustomerManagerBefore(start,pageable);
+            }
+            else if(key==2){
+                entitiesPage=ebankUserService.pagedByCustomerManagerAfter(start,pageable);
+            }
         }
+        model.addAttribute("users",entitiesPage.getContent());
+        int totalPages=entitiesPage.getTotalPages();
+        totalPages=totalPages==0?1:totalPages;
+        model.addAttribute("totalPages",totalPages);
+        model.addAttribute("currentPage",pageNum);
+        model.addAttribute("pageShow",PageNumModel.bulid(pageNum,totalPages));
         return "ebank/MyCustomer";
     }
 }

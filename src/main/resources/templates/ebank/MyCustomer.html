@@ -31,9 +31,9 @@
         <form action="${request.contextPath}/ebank/myCustomer" method="post">
             <p><label>查询条件:</label> <br />
                 <select class="styled" name="key">
-                    <option value="0">默认</option>
-                    <option value="1">未动账</option>
-                    <option value="2">已动账</option>
+                    <option ${(key==0) ? string('selected','')} value="0">默认</option>
+                    <option ${(key==1) ? string('selected','')} value="1">未动账</option>
+                    <option ${(key==2) ? string('selected','')} value="2">已动账</option>
                 </select>
             </p>
             <p>
@@ -57,6 +57,7 @@
                     <th>认证等级</th>
                     <th>最后登录日期</th>
                     <th>最后动账日期</th>
+                    <td>&nbsp;</td>
                 </tr>
                 </thead>
 
@@ -72,6 +73,7 @@
                     <td>${user.grade!''}</td>
                     <td>${user.lastLoginTime!''}</td>
                     <td>${user.lastEffectTime!''}</td>
+                    <td><a href="${request.contextPath}/ebank/myCustomer?pageNum=${currentPage}&userId=${user.userId!''}&key=${key}">脱管</a></td>
                 </tr>
                 </#list>
             </#if>

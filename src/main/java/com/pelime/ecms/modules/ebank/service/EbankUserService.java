@@ -123,13 +123,32 @@ public class EbankUserService {
         }
     }
 
-    public void doClaim(String userId){
+    public int doClaim(String userId){
         SysUserEntity user= ShiroUtils.getUserEntity();
         EbankUserEntity ebankUserEntity=ebankUserDao.findByUserId(userId).get(0);
+        if(ebankUserEntity.getCustomerManager()!=null||!ebankUserEntity.getCustomerManager().equals("")){
+            return 1;
+        }
         ebankUserEntity.setCustomerManager(user.getUsername());
         ebankUserDao.save(ebankUserEntity);
+        return 0;
     }
-
+    public int doNotClaim(String userId){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        EbankUserEntity ebankUserEntity=ebankUserDao.findByUserId(userId).get(0);
+        //如果是管理员可直接脱管
+        if(user.getUsername().equals("admin")){
+            ebankUserEntity.setCustomerManager(null);
+        }
+        else {
+            if(ebankUserEntity.getCustomerManager()==null||!ebankUserEntity.getCustomerManager().equals(user.getUsername())){
+                return 1;
+            }
+            ebankUserEntity.setCustomerManager(null);
+        }
+        ebankUserDao.save(ebankUserEntity);
+        return 0;
+    }
     public Page<EbankUserEntity> pagedByCustomerManager(Pageable pageable){
         SysUserEntity user= ShiroUtils.getUserEntity();
         return ebankUserDao.findAllByCustomerManager(user.getUsername(),pageable);
@@ -138,5 +157,10 @@ public class EbankUserService {
     public Page<EbankUserEntity> pagedByCustomerManagerBefore(Date start,Pageable pageable){
         SysUserEntity user= ShiroUtils.getUserEntity();
         return ebankUserDao.findAllByCustomerManagerAndLastEffectTimeIsNullOrLastEffectTimeBefore(user.getUsername(),start,pageable);
+    }
+
+    public Page<EbankUserEntity> pagedByCustomerManagerAfter(Date start,Pageable pageable){
+        SysUserEntity user= ShiroUtils.getUserEntity();
+        return ebankUserDao.findAllByCustomerManagerAndLastEffectTimeIsNotNullOrLastEffectTimeAfter(user.getUsername(),start,pageable);
     }
 }
