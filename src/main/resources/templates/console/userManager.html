@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="${request.contextPath}/static/css/element.css">
+    <script src="${request.contextPath}/static/js/jquery.min.1.10.2.js"></script>
+    <script src="${request.contextPath}/static/js/vue.js"></script>
+    <script src="${request.contextPath}/static/js/element.js"></script>
+</head>
+<body>
+<script>
+    if(!'defineProperty' in Object){
+        alert("不支持浏览器，请使用高版本浏览器访问");
+    }
+</script>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-form :inline="true" :model="filter">
+                <el-form-item label="查询条件">
+                    <el-select v-model="filter.key" placeholder="请选择查询条件">
+                        <el-option label="用户名" value="username"></el-option>
+                        <el-option label="电话" value="phone"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="查询内容">
+                    <el-input v-model="filter.value" placeholder="请输入查询内容"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="doFilter">查询</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="success" icon="el-icon-plus" circle @click="dialogShow('add',true)"></el-button>
+                </el-form-item>
+            </el-form>
+        </el-header>
+        <el-main>
+            <el-table :data="users" border style="width: 100%">
+                <el-table-column
+                        fixed
+                        prop="username"
+                        label="用户名"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="email"
+                        label="邮箱"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="phone"
+                        label="手机号码"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="department"
+                        label="部门"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="department"
+                        label="部门"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="status"
+                        label="状态"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="createTime"
+                        label="创建时间"
+                        width="150">
+                </el-table-column>
+                <el-table-column
+                        prop="rolesString"
+                        label="角色"
+                        width="300">
+                </el-table-column>
+            </el-table>
+            <el-dialog
+                    title="添加用户"
+                    :visible.sync="dialogVisible"
+                    width="60%"
+                    :close-on-click-modal="false" center>
+                <el-form ref="addform" :model="addform" label-width="80px">
+                    <el-form-item label="用户名">
+                        <el-input placeholder="请输入用户名" v-model="addform.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input placeholder="请输入6-10位的密码" v-model="addform.password" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="再次输入">
+                        <el-input placeholder="请输再次输入密码" v-model="addform.repassword" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="邮箱">
+                        <el-input placeholder="请输输入邮箱" v-model="addform.email"></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号码">
+                        <el-input placeholder="请输输入手机号码" v-model="addform.phone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="部门">
+                        <el-input placeholder="请输输入4位机构号" v-model="addform.department"></el-input>
+                    </el-form-item>
+                    <el-form-item label="是否启用">
+                        <el-switch v-model="addform.status" active-value="1" inactive-value="0"></el-switch>
+                    </el-form-item>
+                    <el-form-item label="角色" prop="type">
+                        <el-checkbox-group v-model="addform.roles">
+                            <el-checkbox :label="role.roleName" v-for="role in roles" :key="role.roleId"></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item style="text-align: center;margin-left: -80px;">
+                        <el-button type="primary" @click="addUser">添加用户</el-button>
+                        <el-button @click="dialogShow('',false)">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-dialog>
+        </el-main>
+    </el-container>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                filter:{
+                    key:'',
+                    value:'',
+                    currentPage:1,
+                    pageSize:20
+                },
+                users:[],
+                roles:[],
+                dialogVisible:false,
+                model:'',
+                addform:{
+                    username:'',
+                    password:'',
+                    repassword:'',
+                    email:'',
+                    phone:'',
+                    department:'',
+                    status:'1',
+                    roles:[]
+                }
+            }
+        },
+        beforeMount(){
+            this.getUsers();
+            this.getRoles();
+        },
+        methods:{
+            getUsers(){
+                var that=this;
+                $.ajax({
+                    url:'${request.contextPath}/api/user/query',
+                    type:'post',
+                    data:{
+                        key:that.key,
+                        value:that.value,
+                        currentPage:that.currentPage,
+                        pageSize:that.pageSize
+                    },
+                    success(res){
+                        if(res.users){
+                            var users=res.users;
+                            that.users.splice(0,that.users);
+                            for(var i=0;i<users.length;i++){
+                                that.users.push(users[i]);
+                            }
+                        }else {
+                            console.log(res);
+                            that.$message({
+                                type:'error',
+                                message:'获取用户失败'
+                            });
+                        }
+                    },
+                    error(err){
+                        console.log(err);
+                        that.$message({
+                            type:'error',
+                            message:'请求发生错误'
+                        });
+                    }
+                });
+            },
+            getRoles(){
+                var that=this;
+                $.ajax({
+                    url:'${request.contextPath}/api/role/queryAll',
+                    type:'get',
+                    success(res){
+                        if(res.roles){
+                            var roles=res.roles;
+                            that.roles.splice(0,that.roles);
+                            for(var i=0;i<roles.length;i++){
+                                that.roles.push(roles[i]);
+                            }
+                        }else {
+                            console.log(res);
+                            that.$message({
+                                type:'error',
+                                message:'获取角色失败'
+                            });
+                        }
+                    },
+                    error(err){
+                        console.log(err);
+                        that.$message({
+                            type:'error',
+                            message:'请求发生错误'
+                        });
+                    }
+                });
+            },
+            doFilter(){
+
+            },
+            dialogShow(model,show){
+                this.model=model;
+                this.dialogVisible=show;
+            },
+            addUser(){
+                var that=this;
+                $.ajax({
+                    url:'${request.contextPath}/api/user/add',
+                    type:'post',
+                    data:{
+                        username:that.addform.username,
+                        password:that.addform.password,
+                        email:that.addform.email,
+                        phone:that.addform.phone,
+                        department:that.addform.department,
+                        roles:that.addform.roles.join(",")
+                    },
+                    success(res){
+                        if(res.code==0){
+                            that.$message({
+                                type:'info',
+                                message:res.msg
+                            });
+                        }else {
+                            console.log(res);
+                            that.$message({
+                                type:'error',
+                                message:'添加用户失败'
+                            });
+                        }
+                    },
+                    error(err){
+                        console.log(err);
+                        that.$message({
+                            type:'error',
+                            message:'请求发生错误'
+                        });
+                    }
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>

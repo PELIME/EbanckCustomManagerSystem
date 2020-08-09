@@ -56,11 +56,24 @@ public class SysMenuService {
         }
         SysRoleEntity roleEntity= sysRoleDao.findByRoleName(roleName);
         //如果该角色名为“超级管理员” 将获取所有目录
-        List<SysMenuEntity> menuEntities=roleName.equals("超级管理员")?sysMenuDao.findAll():roleEntity.getMenus();
+        List<SysMenuEntity> menuEntities=roleName.equals("超级管理员")?sysMenuDao.findAllByTypeNot(2):getOnlyTypeNot2(roleEntity);
         List<MenuModel> menuModels=new LinkedList<>();
         buildMenuMoles(menuModels,menuEntities,0l,activeName);
         memoryMenuByRoleName.put(roleName,menuModels);
         return menuModels;
+    }
+
+    /**
+     * 仅仅获取目录和菜单，不获取接口
+     * @param roleEntity
+     * @return
+     */
+    public List<SysMenuEntity> getOnlyTypeNot2(SysRoleEntity roleEntity){
+        List<SysMenuEntity> menuEntities=roleEntity.getMenus();
+        menuEntities.removeIf((m)->{
+            return m.getType()==2;
+        });
+        return menuEntities;
     }
 
     private void buildMenuMoles(List<MenuModel> models,List<SysMenuEntity> menuEntities,Long nodeId,String activeName){

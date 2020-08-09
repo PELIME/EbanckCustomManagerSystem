@@ -17,6 +17,10 @@ public class SysRoleSevice {
     @Autowired
     SysRoleDao sysRoleDao;
 
+    public List<SysRoleEntity> findAll(){
+        return sysRoleDao.findAll();
+    }
+
     public SysRoleEntity createOrUpdateRole(SysRoleEntity roleEntity){
         return sysRoleDao.save(roleEntity);
     }

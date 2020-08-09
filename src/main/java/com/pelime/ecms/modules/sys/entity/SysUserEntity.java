@@ -1,5 +1,7 @@
 package com.pelime.ecms.modules.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
@@ -59,6 +61,9 @@ public class SysUserEntity {
     @Transient
     private SysRoleEntity activeRole;
 
+    @Transient
+    private String rolesString;
+
     public Long getUserId() {
         return userId;
     }
@@ -75,6 +80,7 @@ public class SysUserEntity {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -115,6 +121,7 @@ public class SysUserEntity {
         this.status = status;
     }
 
+    @JsonIgnore
     public List<SysRoleEntity> getRoles() {
         return roles;
     }
@@ -137,5 +144,13 @@ public class SysUserEntity {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getRolesString() {
+        return rolesString;
+    }
+
+    public void setRolesString(String rolesString) {
+        this.rolesString = rolesString;
     }
 }

@@ -22,6 +22,7 @@ public class ShiroConfig {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+
     @Bean("sessionManager")
     public SessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
@@ -48,6 +49,7 @@ public class ShiroConfig {
         shiroFilter.setLoginUrl("/login");
         shiroFilter.setUnauthorizedUrl("/");
 
+        shiroFilter.setUnauthorizedUrl("/unauthorized");
         Map<String, String> filterMap = new LinkedHashMap<>();
 
         filterMap.put("/swagger-ui.html", "anon");
@@ -60,9 +62,10 @@ public class ShiroConfig {
         filterMap.put("/index/welcome", "anon");
         filterMap.put("/favicon.ico", "anon");
 
-        //暂时开发，生产环境需注释掉
-        filterMap.put("/api/user/add", "anon");
-        filterMap.put("/ebank/upload","perms[ebank:upload]");
+
+//        //暂时开发，生产环境需注释掉
+//        filterMap.put("/api/user/add", "anon");
+//        filterMap.put("/ebank/upload","perms[ebank:upload]");
         filterMap.put("/**", "authc");
 
         shiroFilter.setFilterChainDefinitionMap(filterMap);

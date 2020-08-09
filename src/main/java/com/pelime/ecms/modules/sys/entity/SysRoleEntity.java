@@ -1,5 +1,7 @@
 package com.pelime.ecms.modules.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +56,7 @@ public class SysRoleEntity {
         this.remark = remark;
     }
 
+    @JsonIgnore
     public List<SysUserEntity> getUsers() {
         return users;
     }
@@ -70,6 +73,7 @@ public class SysRoleEntity {
         this.createTime = createTime;
     }
 
+    @JsonIgnore
     public List<SysMenuEntity> getMenus() {
         return menus;
     }

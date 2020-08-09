@@ -4,10 +4,12 @@ import com.pelime.ecms.modules.sys.entity.SysRoleEntity;
 import com.pelime.ecms.modules.sys.entity.SysUserEntity;
 import com.pelime.ecms.modules.sys.service.SysMenuService;
 import com.pelime.ecms.modules.sys.shiro.ShiroUtils;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -40,7 +42,6 @@ public class HomeController {
 
         return "index";
     }
-
     @GetMapping("/index/welcome")
     public String welcome(){
         return "home/welcome";
@@ -49,5 +50,10 @@ public class HomeController {
     @GetMapping("index-tmp")
     public  String test(){
         return "index-tmp";
+    }
+
+    @RequestMapping("/unauthorized")
+    public String unauthorized(){
+        return "unauthorized";
     }
 }

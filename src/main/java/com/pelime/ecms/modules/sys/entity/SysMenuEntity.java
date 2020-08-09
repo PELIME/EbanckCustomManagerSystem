@@ -41,7 +41,7 @@ public class SysMenuEntity {
 
 
     /**
-     * 类型     0：目录   1：菜单   2：按钮
+     * 类型     0：目录   1：菜单   2：接口
      */
     @Column(nullable = false)
     private Integer type;

@@ -1,6 +1,8 @@
 package com.pelime.ecms.modules.sys.dao;
 
 import com.pelime.ecms.modules.sys.entity.SysUserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +18,8 @@ public interface SysUserDao extends JpaRepository<SysUserEntity,Long> {
             "LEFT JOIN sys_menu m ON rm.menu_id=m.menu_id " +
             "WHERE ur.user_id=?1",nativeQuery = true)
     List<String> findAllPerms(Long userId);
+
+
+    Page<SysUserEntity> findAllByUsernameLike(String username, Pageable pageable);
+    Page<SysUserEntity> findAllByPhone(String phone, Pageable pageable);
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface SysMenuDao extends JpaRepository<SysMenuEntity,Long> {
     List<SysMenuEntity> findAllByParentId(Long parentId);
 
+    List<SysMenuEntity> findAllByTypeNot(Integer type);
 }

@@ -87,7 +87,7 @@ a:hover {
 #header h1 {
 	float: left;
 	margin-right: 80px;
-	font-family: "Titillium800", "Trebuchet MS", Arial, sans-serif;
+	font-family: "TitilliumWeb-SemiBoldItalic-12", "Trebuchet MS", Arial, sans-serif;
 	font-size: 18px;
 	font-weight: normal;
 	text-transform: uppercase;
@@ -321,7 +321,7 @@ a:hover {
 	}
 	
 .block .block_head h2 {
-	font-family: "Titillium999", "Trebuchet MS", Arial, sans-serif;
+	font-family: "TitilliumWeb-Regular-10", "Trebuchet MS", Arial, sans-serif;
 	font-size: 18px;
 	font-weight: normal;
 	text-transform: uppercase;
@@ -395,7 +395,7 @@ a:hover {
 
 .block .block_content h1,
 .block .block_content h2 {
-	font-family: "Titillium999", "Trebuchet MS", Arial, sans-serif;
+	font-family: "TitilliumWeb-Regular-10", "Trebuchet MS", Arial, sans-serif;
 	font-size: 18px;
 	font-weight: normal;
 	color: #454545;
@@ -764,7 +764,7 @@ a:hover {
 	line-height: 30px;
 	background: url(../images/btns.gif) top center no-repeat;
 	border: 0;
-	font-family: "Titillium800", "Trebuchet MS", Arial, sans-serif;
+	font-family: "TitilliumWeb-Regular-10", "Trebuchet MS", Arial, sans-serif;
 	font-size: 14px;
 	font-weight: normal;
 	text-transform: uppercase;

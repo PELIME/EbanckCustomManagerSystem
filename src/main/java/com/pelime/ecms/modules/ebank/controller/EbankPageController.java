@@ -8,6 +8,7 @@ import com.pelime.ecms.modules.sys.entity.SysUserEntity;
 import com.pelime.ecms.modules.sys.service.SysUserService;
 import com.pelime.ecms.modules.sys.shiro.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +36,7 @@ public class EbankPageController {
 
 
     @GetMapping("/upload")
+    @RequiresPermissions("ebank:upload")
     public String upload(){
         return "ebank/upload";
     }
