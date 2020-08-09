@@ -55,22 +55,21 @@
                 | <a href="${request.contextPath}/logout">退出</a>
             </p>
         </div>		<!-- #header ends -->
-        <iframe name="mainFrame" id="mainFrame" frameBorder=0 scrolling=no width="100%" onload="iFrameHeight()" src="${request.contextPath}/index/welcome"></iframe>
         <script type="text/javascript" language="javascript">
-            function getClientHeight()
-            {
-                var clientHeight=0;
-                if(document.body.clientHeight&&document.documentElement.clientHeight)
-                {
-                    var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
-                }
-                else
-                {
-                    var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
-                }
-                return clientHeight;
-            }
-            function iFrameHeight() {
+            // function getClientHeight()
+            // {
+            //     var clientHeight=0;
+            //     if(document.body.clientHeight&&document.documentElement.clientHeight)
+            //     {
+            //         var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+            //     }
+            //     else
+            //     {
+            //         var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+            //     }
+            //     return clientHeight;
+            // }
+            function iFramePre() {
                 //判断路径
 
                 var ifm= document.getElementById("mainFrame");
@@ -79,18 +78,30 @@
                 if(srcString.indexOf("/login")+6==srcString.length){
                     window.location.href=srcString;
                 }
-                var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
-                if(ifm != null && subWeb != null) {
-                    var h=getClientHeight();
-                    if(subWeb.body.scrollHeight<h){
-                        ifm.height=h*0.8;
-                    }
-                    else {
-                        ifm.height = subWeb.body.scrollHeight;
-                    }
+                var scrollHeigth=mainFrame.document.body.scrollHeight;
+                //165
+                var showHeigth=document.body.clientHeight-165;
+                console.log(scrollHeigth);
+                if(scrollHeigth<=showHeigth){
+                    ifm.height=showHeigth;
                 }
+                else {
+                    ifm.height=scrollHeigth;
+                }
+
+                // var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
+                // if(ifm != null && subWeb != null) {
+                //     var h=getClientHeight();
+                //     if(subWeb.body.scrollHeight<h){
+                //         ifm.height=h*0.8;
+                //     }
+                //     else {
+                //         ifm.height = subWeb.body.scrollHeight;
+                //     }
             }
         </script>
+        <iframe name="mainFrame" id="mainFrame" frameBorder=0 scrolling=no width="100%" onload="iFramePre()" src="${request.contextPath}/index/welcome" scrolling="yes"></iframe>
+
         <div id="footer">
 
             <p class="left"><a href="tel:13541210431">联系管理员</a></p>

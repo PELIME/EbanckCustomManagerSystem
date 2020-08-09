@@ -37,6 +37,7 @@ public class UserApi {
             Map<String,Object> result=new HashMap<>();
             Page<SysUserEntity> sysUserEntities=sysUserService.queryPageUsers(key,value,currentPage,pageSize);
             result.put("totalPages",sysUserEntities.getTotalPages());
+            result.put("total",sysUserEntities.getNumber());
             result.put("totalElements",sysUserEntities.getTotalElements());
             result.put("currentPage",currentPage);
             result.put("pageSize",pageSize);
