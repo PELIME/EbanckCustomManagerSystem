@@ -66,6 +66,7 @@ public class ShiroConfig {
 //        //暂时开发，生产环境需注释掉
 //        filterMap.put("/api/user/add", "anon");
 //        filterMap.put("/ebank/upload","perms[ebank:upload]");
+        filterMap.put("/test", "anon");
         filterMap.put("/**", "authc");
 
         shiroFilter.setFilterChainDefinitionMap(filterMap);

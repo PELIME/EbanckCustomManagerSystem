@@ -78,16 +78,16 @@
                 if(srcString.indexOf("/login")+6==srcString.length){
                     window.location.href=srcString;
                 }
-                var scrollHeigth=mainFrame.document.body.scrollHeight;
-                //165
-                var showHeigth=document.body.clientHeight-165;
-                console.log(scrollHeigth);
-                if(scrollHeigth<=showHeigth){
-                    ifm.height=showHeigth;
-                }
-                else {
-                    ifm.height=scrollHeigth;
-                }
+                // var scrollHeigth=mainFrame.document.body.scrollHeight;
+                // //165
+                // var showHeigth=document.body.clientHeight-165;
+                // console.log(scrollHeigth);
+                // if(scrollHeigth<=showHeigth){
+                //     ifm.height=showHeigth;
+                // }
+                // else {
+                //     ifm.height=scrollHeigth;
+                // }
 
                 // var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
                 // if(ifm != null && subWeb != null) {
@@ -100,7 +100,7 @@
                 //     }
             }
         </script>
-        <iframe name="mainFrame" id="mainFrame" frameBorder=0 scrolling=no width="100%" onload="iFramePre()" src="${request.contextPath}/index/welcome" scrolling="yes"></iframe>
+        <iframe name="mainFrame" id="mainFrame" frameBorder=0 scrolling=no width="100%" height="100%" onload="iFramePre()" src="${request.contextPath}/index/welcome" scrolling="yes"></iframe>
 
         <div id="footer">
 

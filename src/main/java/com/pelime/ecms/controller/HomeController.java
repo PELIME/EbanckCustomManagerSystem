@@ -51,6 +51,11 @@ public class HomeController {
     public  String test(){
         return "index-tmp";
     }
+    @GetMapping("test")
+    public  String test1(){
+        return "test";
+    }
+
 
     @RequestMapping("/unauthorized")
     public String unauthorized(){

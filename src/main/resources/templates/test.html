@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>无限级纯CSS导航菜单</title>
+    <style type="text/css">
+        .nav{
+            margin: 0;
+            padding: 0;
+            float: left;
+            list-style: none;
+            background: #222;
+        }
+        .nav a{
+            color: #ddd;
+            display: block;
+            padding: 0 15px;
+            text-decoration: none;
+        }
+        .nav a:hover{
+            color: #2FAADD;
+        }
+        .nav .item{
+            margin: 0;
+            padding: 0;
+            float: left;
+            height: 35px;
+            line-height: 35px;
+            white-space: nowrap;
+        }
+        .nav .item:hover>a{
+            color: #2FAADD;
+        }
+        .nav .item:hover>.nav{
+            display: block;
+        }
+        .nav .nav{
+            top: 100%;
+            left: 0;
+            display: none;
+            background: #444;
+            position: absolute;
+            border: 1px solid #888;
+        }
+        .nav .nav .item{
+            clear: both;
+            min-width: 100%;
+        }
+        .nav .nav .nav{
+            top: -1px;
+            left: 100%;
+        }
+        .nav .nav .nav .nav .nav .nav{
+            left: auto;
+            right: 100%;
+        }
+    </style>
+</head>
+<body>
+<ul class="nav">
+    <li class="item"><a href="#">一级导航 1</a>
+        <ul class="nav">
+            <li class="item"><a href="#">二级导航 1</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 2</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">无子导航 3</a></li>
+            <li class="item"><a href="#">二级导航 4</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">无子导航 5</a></li>
+        </ul>
+    </li>
+    <li class="item"><a href="#">长长的一级导航 2</a>
+        <ul class="nav">
+            <li class="item"><a href="#">二级导航 1</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 2</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">更长的二级导航 3</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">低调的三级导航 5</a>
+                        <ul class="nav">
+                            <li class="item"><a href="#">四级导航 1</a></li>
+                            <li class="item"><a href="#">藏的很深的四级导航 2</a>
+                                <ul class="nav">
+                                    <li class="item"><a href="#">藏的更深的五级导航 0</a></li>
+                                    <li class="item"><a href="#">五级导航 1</a></li>
+                                    <li class="item"><a href="#">五级导航 2</a></li>
+                                    <li class="item"><a href="#">五级导航 3</a></li>
+                                    <li class="item"><a href="#">五级导航 4</a></li>
+                                    <li class="item"><a href="#">下面该往左了吧</a>
+                                        <ul class="nav">
+                                            <li class="item"><a href="#">我在左边</a></li>
+                                            <li class="item"><a href="#">我真的在左边</a></li>
+                                            <li class="item"><a href="#">我就要赖在左边</a></li>
+                                            <li class="item"><a href="#">杨丞琳的左边好听</a></li>
+                                            <li class="item"><a href="#">呜呜，今年双十一又要过节</a></li>
+                                            <li class="item"><a href="#">妹纸妹纸在哪里？</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="item"><a href="#">四级导航 3</a></li>
+                            <li class="item"><a href="#">四级导航 4</a></li>
+                            <li class="item"><a href="#">四级导航 5</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 4</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 5</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="item"><a href="#">无子导航 3</a></li>
+    <li class="item"><a href="#">一级导航 4</a>
+        <ul class="nav">
+            <li class="item"><a href="#">二级导航 1</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 2</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 3</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 4</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+            <li class="item"><a href="#">二级导航 5</a>
+                <ul class="nav">
+                    <li class="item"><a href="#">三级导航 1</a></li>
+                    <li class="item"><a href="#">三级导航 2</a></li>
+                    <li class="item"><a href="#">三级导航 3</a></li>
+                    <li class="item"><a href="#">三级导航 4</a></li>
+                    <li class="item"><a href="#">三级导航 5</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="item"><a href="#">一级导航 5</a>
+        <ul class="nav">
+            <li class="item"><a href="#">无子导航 1</a></li>
+            <li class="item"><a href="#">无子导航 2</a></li>
+            <li class="item"><a href="#">无子导航 3</a></li>
+            <li class="item"><a href="#">无子导航 4</a></li>
+            <li class="item"><a href="#">无子导航 5</a></li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

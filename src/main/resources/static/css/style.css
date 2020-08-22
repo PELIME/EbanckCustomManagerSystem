@@ -976,13 +976,13 @@ a:hover {
 
 #footer {
 	background: url(../images/ft.gif) 0 0 repeat-x;
-	padding: 10px 0 50px;
-	font-size: 10px;
-	color: #757575;
-	clear: both;
-	overflow: hidden;
-	}
-	
+	height: 50px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+}
 #footer a {
 	color: #757575;
 	text-decoration: underline;
