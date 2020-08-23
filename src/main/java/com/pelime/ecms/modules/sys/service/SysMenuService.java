@@ -36,7 +36,7 @@ public class SysMenuService {
         menuHtmlCache.clear();
     }
 
-    public String getMenuHtml(String roleName,String activeName){
+    public String getMenuHtml(String roleName,String activeName,boolean isIe){
         //先从缓存里区
         if(menuHtmlCache.containsKey(roleName)){
             return menuHtmlCache.get(roleName);
@@ -44,7 +44,11 @@ public class SysMenuService {
         List<MenuModel> models=getMenu(roleName,activeName);
         StringBuilder sb=new StringBuilder();
         for(MenuModel mm : models){
-            sb.append(mm.toString());
+            if(isIe){
+                sb.append(mm.toIeString());
+            }else {
+                sb.append(mm.toString());
+            }
         }
         String menuString=sb.toString();
         menuHtmlCache.put(roleName,menuString);

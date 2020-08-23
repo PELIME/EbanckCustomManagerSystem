@@ -17,7 +17,7 @@ public class EbankUserEntity {
     /***
      * 机构编号
      */
-    private int deptNum;
+    private String deptNum;
     /**
      * 数据时间
      */
@@ -65,7 +65,7 @@ public class EbankUserEntity {
      */
     private String customerManager;
 
-    public EbankUserEntity(String userId, int deptNum, Date updateTime, String name, String idCardNumber, String phone, Date registerTime, String grade, Date lastLoginTime, Date lastEffectTime) {
+    public EbankUserEntity(String userId, String deptNum, Date updateTime, String name, String idCardNumber, String phone, Date registerTime, String grade, Date lastLoginTime, Date lastEffectTime) {
         this.userId = userId;
         this.deptNum = deptNum;
         this.updateTime = updateTime;
@@ -93,11 +93,11 @@ public class EbankUserEntity {
         this.userId = userId;
     }
 
-    public int getDeptNum() {
+    public String getDeptNum() {
         return deptNum;
     }
 
-    public void setDeptNum(int deptNum) {
+    public void setDeptNum(String deptNum) {
         this.deptNum = deptNum;
     }
 

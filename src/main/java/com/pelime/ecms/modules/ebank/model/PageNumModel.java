@@ -17,11 +17,21 @@ public class PageNumModel {
 
 
     public static List<PageNumModel> bulid(Integer currentPage,Integer totalPages) throws Exception {
-        if(currentPage<1||currentPage>totalPages){
-            throw new Exception("当前页数错误");
+        //算出显示的最低页码和最高页码
+        if(currentPage<1){
+            currentPage=1;
         }
+        else if(currentPage>totalPages){
+            currentPage=totalPages;
+        }
+        int min=currentPage-3<0?1:currentPage-3;
+        int max=currentPage+3>totalPages?totalPages:currentPage+3;
+
         List<PageNumModel> result=new LinkedList<>();
-        if(currentPage!=1||(currentPage-6)>0){
+        if(min>1){
+
+        }..
+        if(currentPage!=1&&(currentPage-6)>0){
             result.add(new PageNumModel("<<",currentPage-6));
         }
         int showMaxNum=totalPages-currentPage>6?currentPage+5:totalPages;

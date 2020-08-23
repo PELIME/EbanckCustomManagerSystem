@@ -1,5 +1,6 @@
 package com.pelime.ecms.controller;
 
+import com.pelime.ecms.modules.ebank.util.RequestUtils;
 import com.pelime.ecms.modules.sys.entity.SysRoleEntity;
 import com.pelime.ecms.modules.sys.entity.SysUserEntity;
 import com.pelime.ecms.modules.sys.service.SysMenuService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -21,7 +23,7 @@ public class HomeController {
     SysMenuService sysMenuService;
 
     @GetMapping({"/","/index"})
-    public String index(Model model,@RequestParam(value = "role",defaultValue = "-1") Long role){
+    public String index(Model model, @RequestParam(value = "role",defaultValue = "-1") Long role, HttpServletRequest request){
         SysUserEntity user=ShiroUtils.getUserEntity();
         model.addAttribute("homeActive",true);
         if(user!=null){
@@ -36,7 +38,14 @@ public class HomeController {
                 }
             }
             model.addAttribute("activeRole",user.getActiveRole());
-            model.addAttribute("menuString",sysMenuService.getMenuHtml(user.getActiveRole().getRoleName(),"首页"));
+            boolean isIe= RequestUtils.isIe(request);
+            if(isIe){
+                model.addAttribute("menuString",sysMenuService.getMenuHtml(user.getActiveRole().getRoleName(),"首页",true));
+                return "sindex";
+            }
+            else {
+                model.addAttribute("menuString",sysMenuService.getMenuHtml(user.getActiveRole().getRoleName(),"首页",false));
+            }
         }
         //获取该角色菜单
 

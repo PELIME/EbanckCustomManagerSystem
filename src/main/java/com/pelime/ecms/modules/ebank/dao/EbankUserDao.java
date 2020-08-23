@@ -41,13 +41,13 @@ public interface EbankUserDao extends JpaRepository<EbankUserEntity,String> {
 
     Page<EbankUserEntity> findAllByLastEffectTimeBetween(Date start, Date end, Pageable pageable);
 
-    Page<EbankUserEntity> findAllByDeptNum(Integer dept,Pageable pageable);
+    Page<EbankUserEntity> findAllByDeptNum(String dept,Pageable pageable);
 
-    Page<EbankUserEntity> findAllByDeptNumAndCustomerManager(Integer dept,String customerManager,Pageable pageable);
+    Page<EbankUserEntity> findAllByDeptNumAndCustomerManager(String dept,String customerManager,Pageable pageable);
 
-    Page<EbankUserEntity> findAllByDeptNumIn(Collection<Integer> depts,Pageable pageable);
+    Page<EbankUserEntity> findAllByDeptNumIn(Collection<String> depts,Pageable pageable);
 
-    Page<EbankUserEntity> findAllByDeptNumInAndCustomerManager(Collection<Integer> depts,String customerManager,Pageable pageable);
+    Page<EbankUserEntity> findAllByDeptNumInAndCustomerManager(Collection<String> depts,String customerManager,Pageable pageable);
 
 
     @Query("SELECT  e FROM ebank_user e WHERE e.customerManager = :customerManager AND (e.lastEffectTime is null OR e.lastEffectTime < :start)")

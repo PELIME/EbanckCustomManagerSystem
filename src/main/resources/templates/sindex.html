@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单</title>
+    <!Doctype html>
+    <meta http-equiv=Content-Type content=“text/html;charset=utf-8″>
+    <meta http-equiv=X-UA-Compatible content=IE=EmulateIE7>
+    <script>var wpo={start:new Date*1,pid:109,page:‘superpage’}</script>
+    <meta http-equiv=X-UA-Compatible content=IE=EmulateIE7>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <ul id="nav">
+            <#if homeActive??>
+            <li class="active"><a href="${request.contextPath}/index">主页</a></li>
+            <#else>
+            <li><a href="${request.contextPath}/index">主页</a></li>
+        </#if>
+        <#if menuString??>
+        ${menuString}
+    </#if>
+    </ul>
+    </div>
+</div>
+</body>
+</html>

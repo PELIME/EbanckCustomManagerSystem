@@ -65,11 +65,12 @@ public class EbankUserService {
                 continue;
             }
             //保存rowdata
-            if(ebankUserDao.findById(entity.getUserId())!=null){
+            EbankUserEntity tmp=ebankUserDao.getOne(entity.getUserId());
+            if(tmp==null){
                 ebankUserDao.save(entity);
             }
             else {
-                ebankUserDao.save(entity);
+                ebankUserDao.save(tmp);
             }
         }
         return true;
@@ -113,12 +114,12 @@ public class EbankUserService {
         //@TODO 空判断
         String[] deptsArr=depts.split(",");
         if(deptsArr.length==1){
-           return ebankUserDao.findAllByDeptNum(Integer.parseInt(depts),pageable);
+           return ebankUserDao.findAllByDeptNum(depts,pageable);
         }
         else {
-            List<Integer> deptsNum=new ArrayList<>(deptsArr.length);
+            List<String> deptsNum=new ArrayList<>(deptsArr.length);
             for(String s : deptsArr){
-                deptsNum.add(Integer.parseInt(s));
+                deptsNum.add(s);
             }
             return ebankUserDao.findAllByDeptNumIn(deptsNum,pageable);
         }

@@ -54,7 +54,6 @@ public class MenuModel {
             ssb.append("><a href='#'>"+this.name+"</a>");
         }
         else {
-
             if(openType==1){
                 ssb.append("><a href='"+this.contextPath+this.url+"'>"+this.name+"</a>");
             }
@@ -64,6 +63,35 @@ public class MenuModel {
             else {
                 ssb.append("><a href='"+this.contextPath+this.url+"' target='mainFrame'>"+this.name+"</a>");
             }
+        }
+        this.startString=ssb.toString();
+        //构建便签内部代码
+        if(this.childrens==null||this.childrens.size()==0){
+            this.contentString="";
+        }
+        else {
+            StringBuilder csb=new StringBuilder("<ul>");
+            for(MenuModel mm : this.childrens){
+                csb.append(mm.toString());
+            }
+            csb.append("</ul>");
+            this.contentString=csb.toString();
+        }
+        this.endString="</li>";
+        return startString+contentString+endString;
+    }
+
+    public String toIeString() {
+        StringBuilder ssb=new StringBuilder("<li");
+        if(this.active){
+            ssb.append(" class='active'");
+        }
+
+        if(this.type==0){
+            ssb.append("><a href='#'>"+this.name+"</a>");
+        }
+        else {
+            ssb.append("><a href='"+this.contextPath+this.url+"' target='_blank'>"+this.name+"</a>");
         }
         this.startString=ssb.toString();
         //构建便签内部代码

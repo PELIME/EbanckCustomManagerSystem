@@ -101,7 +101,7 @@ public class EbankPageController {
         if(userId!=null&&!userId.equals("")){
             ebankUserService.doClaim(userId);
         }
-        if(key!=null&& key!=0){
+        if(key!=null){
             List<EbankUserEntity> users=user.getUsername().equals("admin")?ebankUserService.findByKeyValue(key,value):ebankUserService.findByKeyValue(key,value,user.getDepartment());
             model.addAttribute("users",users);
             int totalPages=1;
