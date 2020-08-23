@@ -90,7 +90,7 @@ public class EbankPageController {
     @RequestMapping("/customerClaim")
     public String customerClaim(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
                                 @RequestParam(name = "userId",defaultValue = "") String userId,
-                                @RequestParam(name = "key",defaultValue = "0") Integer key,
+                                @RequestParam(name = "key",defaultValue = "-1") Integer key,
                                 @RequestParam(name = "value",defaultValue = "") String value,
                                 Model model) throws Exception {
         model.addAttribute("key",key);
@@ -101,7 +101,7 @@ public class EbankPageController {
         if(userId!=null&&!userId.equals("")){
             ebankUserService.doClaim(userId);
         }
-        if(key!=null){
+        if(key!=-1){
             List<EbankUserEntity> users=user.getUsername().equals("admin")?ebankUserService.findByKeyValue(key,value):ebankUserService.findByKeyValue(key,value,user.getDepartment());
             model.addAttribute("users",users);
             int totalPages=1;

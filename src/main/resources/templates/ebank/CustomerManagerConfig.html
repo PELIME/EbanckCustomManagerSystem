@@ -31,9 +31,10 @@
         <form action="${request.contextPath}/ebank/customerClaim" method="post">
             <p><label>查询条件:</label> <br />
                 <select class="styled" name="key">
+                    <option  ${(key==-1) ? string('selected','')} value="-1">不过滤</option>
                     <option  ${(key==0) ? string('selected','')} value="0">用户名</option>
                     <option  ${(key==1) ? string('selected','')} value="1">客户号</option>
-                    <option  ${(key==2) ? string('selected','')}value="2">身份证号码</option>
+                    <option  ${(key==2) ? string('selected','')} value="2">身份证号码</option>
                     <option  ${(key==3) ? string('selected','')} value="3">手机号</option>
                 </select>
             </p>
@@ -88,11 +89,11 @@
             <div class="pagination right">
                 <#if pageShow?? && (pageShow?size > 0)>
                 <span>共 ${totalPages} 页</span>
-                <a href="${request.contextPath}/ebank/customerClaim?pageNum=1">第一页</a>
+                <a href="${request.contextPath}/ebank/customerClaim?key=${key}&value=${value}&pageNum=1">第一页</a>
                 <#list pageShow as ps>
-                <a href="${request.contextPath}/ebank/customerClaim?pageNum=${ps.num}" ${ps.attr}>${ps.show}</a>
+                <a href="${request.contextPath}/ebank/customerClaim?key=${key}&value=${value}&pageNum=${ps.num}" ${ps.attr}>${ps.show}</a>
                 </#list>
-                <a href="${request.contextPath}/ebank/customerClaim?pageNum=${totalPages}">最后一页</a>
+                <a href="${request.contextPath}/ebank/customerClaim?key=${key}&value=${value}&pageNum=${totalPages}">最后一页</a>
                 </#if>
             </div>
         </form>

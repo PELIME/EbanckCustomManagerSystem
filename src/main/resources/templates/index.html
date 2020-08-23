@@ -39,7 +39,7 @@
                 <#if user??>
                 <a href="#">${user.username}</a>
                 <#else>
-                <a href="${request.contextPath}/login">陌生人</a>
+                <a href="${request.contextPath}/login">请登录</a>
                 </#if>
                 <#if roles??>
                 | <select name="roles" style="background-color: #202020;color: #999; border: none" onchange="changeRole(this.value)">
@@ -56,19 +56,19 @@
             </p>
         </div>		<!-- #header ends -->
         <script type="text/javascript" language="javascript">
-            // function getClientHeight()
-            // {
-            //     var clientHeight=0;
-            //     if(document.body.clientHeight&&document.documentElement.clientHeight)
-            //     {
-            //         var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
-            //     }
-            //     else
-            //     {
-            //         var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
-            //     }
-            //     return clientHeight;
-            // }
+            function getClientHeight()
+            {
+                var clientHeight=0;
+                if(document.body.clientHeight&&document.documentElement.clientHeight)
+                {
+                    var clientHeight = (document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+                }
+                else
+                {
+                    var clientHeight = (document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;
+                }
+                return clientHeight;
+            }
             function iFramePre() {
                 //判断路径
 
@@ -78,36 +78,36 @@
                 if(srcString.indexOf("/login")+6==srcString.length){
                     window.location.href=srcString;
                 }
-                // var scrollHeigth=mainFrame.document.body.scrollHeight;
-                // //165
-                // var showHeigth=document.body.clientHeight-165;
-                // console.log(scrollHeigth);
-                // if(scrollHeigth<=showHeigth){
-                //     ifm.height=showHeigth;
-                // }
-                // else {
-                //     ifm.height=scrollHeigth;
-                // }
+                var scrollHeigth=mainFrame.document.body.scrollHeight;
+                //165
+                var showHeigth=document.body.clientHeight-165;
+                console.log(scrollHeigth);
+                if(scrollHeigth<=showHeigth){
+                    ifm.height=showHeigth;
+                }
+                else {
+                    ifm.height=scrollHeigth;
+                }
 
-                // var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
-                // if(ifm != null && subWeb != null) {
-                //     var h=getClientHeight();
-                //     if(subWeb.body.scrollHeight<h){
-                //         ifm.height=h*0.8;
-                //     }
-                //     else {
-                //         ifm.height = subWeb.body.scrollHeight;
-                //     }
+                var subWeb = document.frames ? document.frames["mainFrame"].document : ifm.contentDocument;
+                if(ifm != null && subWeb != null) {
+                    var h = getClientHeight();
+                    if (subWeb.body.scrollHeight < h) {
+                        ifm.height = h * 0.8;
+                    } else {
+                        ifm.height = subWeb.body.scrollHeight;
+                    }
+                }
             }
         </script>
         <iframe name="mainFrame" id="mainFrame" frameBorder=0 scrolling=no width="100%" height="100%" onload="iFramePre()" src="${request.contextPath}/index/welcome" scrolling="yes"></iframe>
 
-        <div id="footer">
+<!--        <div id="footer">-->
 
-            <p class="left"><a href="tel:13541210431">联系管理员</a></p>
-            <p class="right">powered by 肖承祥</a></p>
+<!--            <p class="left"><a href="tel:13541210431">联系管理员</a></p>-->
+<!--            <p class="right">powered by 肖承祥</a></p>-->
 
-        </div>
+<!--        </div>-->
 </div>		<!-- #hld ends -->
 <script>
     function changeRole(role){

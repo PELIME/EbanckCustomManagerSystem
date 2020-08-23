@@ -25,7 +25,7 @@
     <div class="block_head">
         <div class="bheadl"></div>
         <div class="bheadr"></div>
-        <h2>动账查询</h2>
+        <h2>我的客户</h2>
     </div>
     <div class="block_content">
         <form action="${request.contextPath}/ebank/myCustomer" method="post">
@@ -83,11 +83,11 @@
             <div class="pagination right">
                 <#if pageShow?? && (pageShow?size > 0)>
                 <span>共 ${totalPages} 页</span>
-                <a href="${request.contextPath}/ebank/myCustomer?pageNum=1">第一页</a>
+                <a href="${request.contextPath}/ebank/myCustomer?key=${key}&pageNum=1">第一页</a>
                 <#list pageShow as ps>
-                <a href="${request.contextPath}/ebank/myCustomer?pageNum=${ps.num}" ${ps.attr}>${ps.show}</a>
+                <a href="${request.contextPath}/ebank/myCustomer?key=${key}&pageNum=${ps.num}" ${ps.attr}>${ps.show}</a>
             </#list>
-            <a href="${request.contextPath}/ebank/myCustomer?pageNum=${totalPages}">最后一页</a>
+            <a href="${request.contextPath}/ebank/myCustomer?key=${key}&pageNum=${totalPages}">最后一页</a>
         </#if>
     </div>
     </form>

@@ -29,20 +29,17 @@ public class PageNumModel {
 
         List<PageNumModel> result=new LinkedList<>();
         if(min>1){
-
-        }..
-        if(currentPage!=1&&(currentPage-6)>0){
-            result.add(new PageNumModel("<<",currentPage-6));
+            result.add(new PageNumModel("<<",min-4>1?min-4:1));
         }
-        int showMaxNum=totalPages-currentPage>6?currentPage+5:totalPages;
-        PageNumModel first=new PageNumModel(currentPage.toString(),currentPage);
-        first.setAttr("class='active'");
-        result.add(first);
-        for(int i=currentPage+1;i<=showMaxNum;i++){
-            result.add(new PageNumModel(String.valueOf(i),i));
+        for(int i=min;i<=max;i++){
+            PageNumModel pm=new PageNumModel(String.valueOf(i),i);
+            if(i==currentPage){
+                pm.setAttr("class='active'");
+            }
+            result.add(pm);
         }
-        if(totalPages>showMaxNum){
-            result.add(new PageNumModel(">>",showMaxNum+1));
+        if(totalPages>max){
+            result.add(new PageNumModel(">>",max+4<totalPages?max+4:totalPages));
         }
         return result;
     }

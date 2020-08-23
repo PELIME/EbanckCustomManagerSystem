@@ -477,10 +477,10 @@ a:hover {
 .block .pagination.right {
 	float: right;
 	text-align: right;
-	padding-top: 1px;
 	border: 0;
-	width: 500px;
+	width: 600px;
 	overflow: hidden;
+	padding: 10px 0;
 	}
 
 .block .pagination a {
@@ -978,10 +978,10 @@ a:hover {
 	background: url(../images/ft.gif) 0 0 repeat-x;
 	height: 50px;
 	width: 100%;
-	position: absolute;
 	bottom: 0;
 	left: 0;
 	z-index: 100;
+	padding: 20px 0;
 }
 #footer a {
 	color: #757575;
